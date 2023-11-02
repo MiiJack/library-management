@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Library API
   version: 1.0.0
-  description: STD22001
+  description: STD22079
 servers:
   - url: https://library.com
 paths:
@@ -19,19 +19,19 @@ paths:
           schema:
             type: string
         - in: query
-        name: startDate
-        description: Filter return books by the start date of releaseDate interval
-        required: false
-        schema:
-          type: string
-          format: date
-      - in: query
-        name: endDate
-        description: Filter return books by the end date of releaseDate interval
-        required: false
-        schema:
-          type: string
-          format: date
+          name: startDate
+          description: Filter return books by the start date of releaseDate interval
+          required: false
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: endDate
+          description: Filter return books by the end date of releaseDate interval
+          required: false
+          schema:
+            type: string
+            format: date
       responses:
         200:
           description: The list of filtered books
@@ -66,7 +66,7 @@ paths:
       description: Returns a list of all authors ordered by their name ascending
       operationId: getAuthors
       parameters:
-        - name : authorName
+        - name: authorName
           in: query
           description: Filters by given author name
           required: false
@@ -86,10 +86,10 @@ paths:
       operationId: updateAuthor
       requestBody:
         content: 
-            application/json:
-              schema:
-                type: array
-                items:
+          application/json:
+            schema:
+              type: array
+              items:
                 $ref: '#/components/schemas/Author'
       responses:
         200:
@@ -105,28 +105,28 @@ paths:
       description: Deletes an author by Id
       operationId: deleteAuthor
       parameters:
-      - name : authorId
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: authorId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Delete successful
 components:
   schemas:
     Author:
-        type: object
-        properties:
-          id:
-            type: string
-          name:
-            type: string
-          sex:
-            type: string
-            enum:
-              - M
-              - F
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sex:
+          type: string
+          enum:
+            - M
+            - F
     Book:
       type: object
       properties:
@@ -135,7 +135,7 @@ components:
         bookName:
           type: string
         author:
-          $ref: '#components/schemas/Author'
+          $ref: '#/components/schemas/Author'
         pageNumbers:
           type: integer
         topic:
