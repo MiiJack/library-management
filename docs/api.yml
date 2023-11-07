@@ -278,6 +278,12 @@ paths:
       summary: Get all topics of an author
       description: Returns topics of an author are ordered by updated datetime.
       operationId: getAuthorTopics
+      parameters:
+        - name: authorId
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: The list of filtered topics of a given author
