@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.4.3
+  version: 1.5.0
   description: STD22079
 
 servers:
@@ -161,162 +161,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
 
-  /books/{bookId}/topics/{topicId}:
-    put:
-      tags:
-        - Books
-        - Topics
-      summary: Modify topic of Books
-      description: Modify the topic of a specific book.
-      operationId: modifyTopicOfBook
-      parameters:
-        - name: bookId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Topic successfully modified in the book
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
-
-  /books/topics:
-    put:
-      tags:
-        - Books
-        - Topics
-      summary: Modify Topics of Books
-      description: Modify the topics of a list of books.
-      operationId: modifyTopicOfBookList
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/UpdateBookTopic'
-      responses:
-        200:
-          description: Topics successfully modified in the list of books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
-
-  /topics:
-    get:
-      tags:
-        - Topics
-      summary: Get all topics
-      description: Retrieve a list of topics, optionally filtered and paginated.
-      operationId: getTopics
-      parameters:
-        - in: query
-          name: page
-          description: "Page number for pagination. Used as 1 by default if no value is provided."
-          required: false
-          schema:
-            type: integer
-            default: 1
-        - in: query
-          name: pageSize
-          description: "Number of items per page. Used as 50 by default if no value is provided."
-          required: false
-          schema:
-            type: integer
-            default: 50
-      responses:
-        200:
-          description: List of filtered topics
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Topic'
-
-    put:
-      tags:
-        - Topics
-      summary: Create or update a list of topics
-      description: Create or update a list of topics.
-      operationId: crupdateTopics
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Topic'
-      responses:
-        200:
-          description: List of created or updated topics
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Topic'
-
-  /topics/{topicId}:
-    delete:
-      tags:
-        - Topics
-      summary: Delete a Topic
-      description: Delete a topic by its ID.
-      operationId: deleteTopic
-      parameters:
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        204:
-          description: Delete successful
-
-  /authorTopics:
-    get:
-      tags:
-        - Topics
-        - Authors
-      summary: Get all topics of an author
-      description: Retrieve all topics of a specific author.
-      operationId: getAuthorTopics
-      parameters:
-        - name: authorId
-          in: query
-          description: Author ID to filter topics.
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: List of filtered topics of a given author
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  author:
-                    $ref: '#/components/schemas/Author'
-                  topics:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Topic'
-
   /authors:
     get:
       tags:
@@ -438,29 +282,6 @@ components:
           type: string
           format: date
 
-    UpdateBookTopic:
-      type: object
-      properties:
-        bookId:
-          type: string
-        topicId:
-          type: string
-      required:
-        - "bookId"
-        - "topicId"
-
-    Topic:
-      type: object
-      properties:
-        id:
-          type: string
-        topic:
-          type: string
-          enum:
-            - ROMANCE
-            - COMEDY
-            - OTHER
-
     Author:
       type: object
       properties:
@@ -485,4 +306,13 @@ components:
         author:
           $ref: "#/components/schemas/Author"
         topic:
-          $ref: "#/components/schemas/Topic"
+          type: object
+          properties:
+            id:
+              type: string
+            topic:
+              type: string
+              enum:
+                - ROMANCE
+                - COMEDY
+                - OTHER
