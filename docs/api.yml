@@ -84,6 +84,52 @@ paths:
       responses:
         200:
           description: Delete successful
+  /books/{bookId}/authors/{authorId}:
+    put:
+      tags: 
+      - Books
+      operationId: modifyAuthorOfBook
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: authorId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Author successfully modified in the book
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+  /books/authors:
+    put:
+      tags:
+      - Books
+      operationId: modifyAuthorOfBookList
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBookAuthor'
+      responses:
+        200:
+          description: Authors successfully modified in the list of book
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
   /authors:
     get:
       tags:
@@ -145,6 +191,13 @@ paths:
           description: Delete successful
 components:
   schemas:
+    UpdateBookAuthor:
+      type: object
+      properties:
+        bookId:
+          type: string
+        authorId:
+          type: string
     CrupdateBook:
       type: object
       properties:
