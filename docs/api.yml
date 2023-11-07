@@ -21,7 +21,7 @@ paths:
       tags:
         - Books
       summary: Get all books
-      description: Get a list of all books ordered by updated datetime.
+      description: Retrieve a list of books, optionally filtered and paginated.
       operationId: getBooks
       parameters:
         - in: query
@@ -46,14 +46,14 @@ paths:
           required: false
         - in: query
           name: page
-          description: "Page number for pagination (default: 1)"
+          description: "Page number for pagination. Used as 1 by default if no value is provided."
           required: false
           schema:
             type: integer
             default: 1
         - in: query
           name: pageSize
-          description: "Number of items per page (default: 50)"
+          description: "Number of items per page. Used as 50 by default if no value is provided."
           required: false
           schema:
             type: integer
@@ -106,7 +106,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        204:
           description: Delete successful
 
   /books/{bookId}/authors/{authorId}:
@@ -114,7 +114,7 @@ paths:
       tags:
         - Books
       summary: Modify Author of Books
-      description: Modify author of a given book ID.
+      description: Modify the author of a specific book.
       operationId: modifyAuthorOfBook
       parameters:
         - name: bookId
@@ -142,7 +142,7 @@ paths:
       tags:
         - Books
       summary: Modify Authors of Books
-      description: Modify authors of a list of books.
+      description: Modify the authors of a list of books.
       operationId: modifyAuthorOfBookList
       requestBody:
         content:
@@ -167,7 +167,7 @@ paths:
         - Books
         - Topics
       summary: Modify topic of Books
-      description: Modify topic of a given book ID.
+      description: Modify the topic of a specific book.
       operationId: modifyTopicOfBook
       parameters:
         - name: bookId
@@ -196,7 +196,7 @@ paths:
         - Books
         - Topics
       summary: Modify Topics of Books
-      description: Modify topics of a list of books.
+      description: Modify the topics of a list of books.
       operationId: modifyTopicOfBookList
       requestBody:
         content:
@@ -220,19 +220,19 @@ paths:
       tags:
         - Topics
       summary: Get all topics
-      description: Get a list of all topics ordered by updated datetime.
+      description: Retrieve a list of topics, optionally filtered and paginated.
       operationId: getTopics
       parameters:
         - in: query
           name: page
-          description: "Page number for pagination (default: 1)"
+          description: "Page number for pagination. Used as 1 by default if no value is provided."
           required: false
           schema:
             type: integer
             default: 1
         - in: query
           name: pageSize
-          description: "Number of items per page (default: 50)"
+          description: "Number of items per page. Used as 50 by default if no value is provided."
           required: false
           schema:
             type: integer
@@ -283,7 +283,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        204:
           description: Delete successful
 
   /authorTopics:
@@ -292,7 +292,7 @@ paths:
         - Topics
         - Authors
       summary: Get all topics of an author
-      description: Get topics of an author ordered by updated datetime.
+      description: Retrieve all topics of a specific author.
       operationId: getAuthorTopics
       parameters:
         - name: authorId
@@ -321,7 +321,7 @@ paths:
       tags:
         - Authors
       summary: Get all authors
-      description: Get a list of all authors ordered by their name ascending.
+      description: Retrieve a list of authors, optionally filtered and paginated.
       operationId: getAuthors
       parameters:
         - name: authorName
@@ -332,14 +332,14 @@ paths:
             type: string
         - in: query
           name: page
-          description: "Page number for pagination (default: 1)"
+          description: "Page number for pagination. Used as 1 by default if no value is provided."
           required: false
           schema:
             type: integer
             default: 1
         - in: query
           name: pageSize
-          description: "Number of items per page (default: 50)"
+          description: "Number of items per page. Used as 50 by default if no value is provided."
           required: false
           schema:
             type: integer
@@ -390,7 +390,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        204:
           description: Delete successful
 
 components:
@@ -414,7 +414,7 @@ components:
         bookName:
           type: string
         pageNumbers:
-          type: string
+          type: integer
         releaseDate:
           type: string
           format: date
