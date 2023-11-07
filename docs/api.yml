@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.4.2
+  version: 1.4.3
   description: STD22079
 
 servers:
@@ -111,6 +111,8 @@ paths:
     put:
       tags:
         - Books
+      summary: Modify Author of Books
+      description: Modify author of a given book ID.
       operationId: modifyAuthorOfBook
       parameters:
         - name: bookId
@@ -137,6 +139,8 @@ paths:
     put:
       tags:
         - Books
+      summary: Modify Authors of Books
+      description: Modify authors of a list of books.
       operationId: modifyAuthorOfBookList
       requestBody:
         content:
@@ -160,6 +164,8 @@ paths:
       tags:
         - Books
         - Topics
+      summary: Modify topic of Books
+      description: Modify author of a given topic ID.
       operationId: modifyTopicOfBook
       parameters:
         - name: bookId
@@ -187,6 +193,8 @@ paths:
       tags:
         - Books
         - Topics
+      summary: Modify Topics of Books
+      description: Modify topics of a list of books.
       operationId: modifyListOfTopicsInABook
       requestBody:
         content:
