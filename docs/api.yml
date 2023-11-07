@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.0
+  version: 1.2.1
   description: STD22079
 servers:
   - url: https://library.com
@@ -156,6 +156,18 @@ paths:
           required: false
           schema:
             type: string
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: pageSize
+          required: false
+          schema:
+            type: integer
+            default: 50
       responses:
         200:
           description: The list of returned author/s
