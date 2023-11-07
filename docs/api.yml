@@ -235,6 +235,28 @@ paths:
       responses:
         200:
           description: Delete successful
+  /authorTopics:
+    get:
+      tags:
+      - Topics
+      - Authors
+      summary: Get all topics of an author
+      description: The returned topics of an author are ordered by updated datetime.
+      operationId: getAuthorTopics
+      responses:
+        200:
+          description: The list of filtered topics of a given author
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  author:
+                      $ref: '#/components/schemas/Author'
+                  topics:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Topic'
   /authors:
     get:
       tags:
