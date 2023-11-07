@@ -269,6 +269,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Topic'
+
   /topics/{topicId}:
     delete:
       tags:
@@ -376,6 +377,24 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+    delete:
+      tags:
+        - Authors
+      summary: Delete multiple authors
+      description: Delete multiple authors by providing a list of IDs.
+      operationId: deleteMultipleAuthors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author/properties/id'
+      responses:
+        204:
+          description: Deletion successful
+
   /authors/{authorId}:
     delete:
       tags:
