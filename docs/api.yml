@@ -1,13 +1,20 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: x.x.x
+  version: 1.1.0
   description: STD22079
 servers:
   - url: https://library.com
+tags:
+  - name: Books
+    description: Concerns books
+  - name: Authors
+    description: Concerns author
 paths:
   /books:
     get:
+      tags:
+      - Books
       summary: Get all books
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
@@ -42,6 +49,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
     put:
+      tags:
+      - Books
       summary: Create or update a list of books
       operationId: crupdateBooks
       requestBody:
@@ -61,6 +70,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
     delete:
+      tags:
+      - Books
       summary: Deletes a Book
       description: Deletes a book by Id
       operationId: deleteBook
@@ -75,6 +86,8 @@ paths:
           description: Delete successful
   /authors:
     get:
+      tags:
+      - Authors
       summary: Gets all authors
       description: Returns a list of all authors ordered by their name ascending
       operationId: getAuthors
@@ -95,6 +108,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
     put:
+      tags:
+      - Authors
       summary: Create or update an author
       operationId: updateAuthor
       requestBody:
@@ -114,6 +129,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
     delete:
+      tags:
+      - Authors
       summary: Deletes an Author
       description: Deletes an author by Id
       operationId: deleteAuthor
@@ -163,5 +180,5 @@ components:
       properties:
         allOf:
           $ref: "#/components/schemas/CrupdateBook"
-        Author:
+        author:
           $ref: "#/components/schemas/Author"
