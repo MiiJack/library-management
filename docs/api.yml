@@ -26,19 +26,23 @@ paths:
           schema:
             type: string
         - in: query
-          name: startDate
-          description: Filter return books by the start date of releaseDate interval
-          required: false
+          name: releaseDateMin
+          description: |
+            If  `releaseDateMax` is not provided, `releaseDateMin` is ignored.
+            `releaseDateMin` can not be after `releaseDateMax`.
           schema:
             type: string
             format: date
+          required: false
         - in: query
-          name: endDate
-          description: Filter return books by the end date of releaseDate interval
-          required: false
+          name: releaseDateMax
+          description: |
+            If  `releaseDateMin` is not provided, `releaseDateMax` is ignored.
+            `releaseDateMax` can not be after `releaseDateMin`.
           schema:
             type: string
             format: date
+          required: false
         - in: query
           name: page
           required: false
