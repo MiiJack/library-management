@@ -75,6 +75,7 @@ paths:
       description: Create or update a list of books.
       operationId: crupdateBooks
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -165,7 +166,7 @@ paths:
         - Books
         - Topics
       summary: Modify topic of Books
-      description: Modify author of a given topic ID.
+      description: Modify topic of a given book ID.
       operationId: modifyTopicOfBook
       parameters:
         - name: bookId
@@ -195,7 +196,7 @@ paths:
         - Topics
       summary: Modify Topics of Books
       description: Modify topics of a list of books.
-      operationId: modifyListOfTopicsInABook
+      operationId: modifyTopicOfBookList
       requestBody:
         content:
           application/json:
@@ -357,7 +358,7 @@ paths:
         - Authors
       summary: Create or update an author
       description: Create or update an author.
-      operationId: updateAuthor
+      operationId: crupdateAuthor
       requestBody:
         content:
           application/json:
@@ -435,10 +436,10 @@ components:
           type: string
         topic:
           type: string
-      enum:
-        - ROMANCE
-        - COMEDY
-        - OTHER
+          enum:
+            - ROMANCE
+            - COMEDY
+            - OTHER
 
     Author:
       type: object
@@ -449,6 +450,7 @@ components:
           type: string
         sex:
           $ref: "#/components/schemas/Sex"
+
     Sex:
       type: string
       enum:
