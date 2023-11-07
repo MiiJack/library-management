@@ -92,6 +92,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
 
+  /books/{bookId}:
     delete:
       tags:
         - Books
@@ -268,7 +269,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Topic'
-
+  /topics/{topicId}:
     delete:
       tags:
         - Topics
@@ -375,7 +376,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
-
+  /authors/{authorId}:
     delete:
       tags:
         - Authors
