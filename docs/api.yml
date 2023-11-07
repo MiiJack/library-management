@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.0.0
+  version: x.x.x
   description: STD22079
 servers:
   - url: https://library.com
@@ -60,6 +60,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+    delete:
+      summary: Deletes a Book
+      description: Deletes a book by Id
+      operationId: deleteBook
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Delete successful
   /authors:
     get:
       summary: Gets all authors
