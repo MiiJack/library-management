@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.4.0
+  version: 1.4.2
   description: STD22079
 
 servers:
@@ -21,44 +21,46 @@ paths:
       tags:
         - Books
       summary: Get all books
-      description: The returned books are ordered by updated datetime.
+      description: Get a list of all books ordered by updated datetime.
       operationId: getBooks
       parameters:
         - in: query
           name: bookName
-          description: Filter return books by given name
+          description: Filter books by name
           required: false
           schema:
             type: string
         - in: query
           name: releaseDateMin
-          description: If `releaseDateMax` is not provided, `releaseDateMin` is ignored. `releaseDateMin` cannot be after `releaseDateMax`.
+          description: Minimum release date. Ignored if `releaseDateMax` is not provided. Must not be after `releaseDateMax`.
           schema:
             type: string
             format: date
           required: false
         - in: query
           name: releaseDateMax
-          description: If `releaseDateMin` is not provided, `releaseDateMax` is ignored. `releaseDateMax` cannot be after `releaseDateMin`.
+          description: Maximum release date. Ignored if `releaseDateMin` is not provided. Must not be before `releaseDateMin`.
           schema:
             type: string
             format: date
           required: false
         - in: query
           name: page
+          description: "Page number for pagination (default: 1)"
           required: false
           schema:
             type: integer
             default: 1
         - in: query
           name: pageSize
+          description: "Number of items per page (default: 50)"
           required: false
           schema:
             type: integer
             default: 50
       responses:
         200:
-          description: The list of filtered books
+          description: List of filtered books
           content:
             application/json:
               schema:
@@ -70,6 +72,7 @@ paths:
       tags:
         - Books
       summary: Create or update a list of books
+      description: Create or update a list of books.
       operationId: crupdateBooks
       requestBody:
         content:
@@ -80,7 +83,7 @@ paths:
                 $ref: '#/components/schemas/CrupdateBook'
       responses:
         200:
-          description: The list of created or updated books
+          description: List of created or updated books
           content:
             application/json:
               schema:
@@ -91,8 +94,8 @@ paths:
     delete:
       tags:
         - Books
-      summary: Deletes a Book
-      description: Deletes a book by Id
+      summary: Delete a Book
+      description: Delete a book by its ID.
       operationId: deleteBook
       parameters:
         - name: bookId
@@ -144,7 +147,7 @@ paths:
                 $ref: '#/components/schemas/UpdateBookAuthor'
       responses:
         200:
-          description: Authors successfully modified in the list of book
+          description: Authors successfully modified in the list of books
           content:
             application/json:
               schema:
@@ -194,7 +197,7 @@ paths:
                 $ref: '#/components/schemas/UpdateBookTopic'
       responses:
         200:
-          description: Topics successfully modified in the list of book
+          description: Topics successfully modified in the list of books
           content:
             application/json:
               schema:
@@ -207,24 +210,26 @@ paths:
       tags:
         - Topics
       summary: Get all topics
-      description: The returned topics are ordered by updated datetime.
+      description: Get a list of all topics ordered by updated datetime.
       operationId: getTopics
       parameters:
         - in: query
           name: page
+          description: "Page number for pagination (default: 1)"
           required: false
           schema:
             type: integer
             default: 1
         - in: query
           name: pageSize
+          description: "Number of items per page (default: 50)"
           required: false
           schema:
             type: integer
             default: 50
       responses:
         200:
-          description: The list of filtered topics
+          description: List of filtered topics
           content:
             application/json:
               schema:
@@ -236,6 +241,7 @@ paths:
       tags:
         - Topics
       summary: Create or update a list of topics
+      description: Create or update a list of topics.
       operationId: crupdateTopics
       requestBody:
         content:
@@ -246,7 +252,7 @@ paths:
                 $ref: '#/components/schemas/Topic'
       responses:
         200:
-          description: The list of created or updated topics
+          description: List of created or updated topics
           content:
             application/json:
               schema:
@@ -257,8 +263,8 @@ paths:
     delete:
       tags:
         - Topics
-      summary: Deletes a Topic
-      description: Deletes a Topic by Id
+      summary: Delete a Topic
+      description: Delete a topic by its ID.
       operationId: deleteTopic
       parameters:
         - name: topicId
@@ -276,17 +282,18 @@ paths:
         - Topics
         - Authors
       summary: Get all topics of an author
-      description: Returns topics of an author are ordered by updated datetime.
+      description: Get topics of an author ordered by updated datetime.
       operationId: getAuthorTopics
       parameters:
         - name: authorId
           in: query
+          description: Author ID to filter topics.
           required: true
           schema:
             type: string
       responses:
         200:
-          description: The list of filtered topics of a given author
+          description: List of filtered topics of a given author
           content:
             application/json:
               schema:
@@ -303,31 +310,33 @@ paths:
     get:
       tags:
         - Authors
-      summary: Gets all authors
-      description: Returns a list of all authors ordered by their name ascending
+      summary: Get all authors
+      description: Get a list of all authors ordered by their name ascending.
       operationId: getAuthors
       parameters:
         - name: authorName
           in: query
-          description: Filters by given author name
+          description: Filter authors by name.
           required: false
           schema:
             type: string
         - in: query
           name: page
+          description: "Page number for pagination (default: 1)"
           required: false
           schema:
             type: integer
             default: 1
         - in: query
           name: pageSize
+          description: "Number of items per page (default: 50)"
           required: false
           schema:
             type: integer
             default: 50
       responses:
         200:
-          description: The list of returned authors
+          description: List of returned authors
           content:
             application/json:
               schema:
@@ -339,6 +348,7 @@ paths:
       tags:
         - Authors
       summary: Create or update an author
+      description: Create or update an author.
       operationId: updateAuthor
       requestBody:
         content:
@@ -349,7 +359,7 @@ paths:
                 $ref: '#/components/schemas/Author'
       responses:
         200:
-          description: The list of created or updated authors
+          description: List of created or updated authors
           content:
             application/json:
               schema:
@@ -360,8 +370,8 @@ paths:
     delete:
       tags:
         - Authors
-      summary: Deletes an Author
-      description: Deletes an author by Id
+      summary: Delete an Author
+      description: Delete an author by its ID.
       operationId: deleteAuthor
       parameters:
         - name: authorId
