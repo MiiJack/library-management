@@ -448,10 +448,12 @@ components:
         name:
           type: string
         sex:
-          type: string
+          $ref: "#/components/schemas/Sex"
+    Sex:
+      type: string
       enum:
-        - M
-        - F
+          - M
+          - F
 
     Book:
       type: object
