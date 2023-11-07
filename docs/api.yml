@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.1.1
+  version: 1.2.0
   description: STD22079
 servers:
   - url: https://library.com
@@ -39,6 +39,18 @@ paths:
           schema:
             type: string
             format: date
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: pageSize
+          required: false
+          schema:
+            type: integer
+            default: 50
       responses:
         200:
           description: The list of filtered books
