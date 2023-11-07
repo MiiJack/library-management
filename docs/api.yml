@@ -148,6 +148,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+  /books/topics:
+    put:
+      tags: 
+      - Books
+      - Topics
+      operationId: modifyListOfTopicsInABook
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBookTopic'
+      responses:
+        200:
+          description: topics successfully modified in the list of book
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
   /topics:
     get:
       tags:
@@ -310,6 +332,13 @@ components:
         releaseDate:
           type: string
           format: date
+    UpdateBookTopic:
+      type: object
+      properties:
+        bookId:
+          type: string
+        topicId:
+          type: string
     Topic:
       type: object
       properties:
