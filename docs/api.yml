@@ -12,8 +12,6 @@ tags:
     description: Concerns books
   - name: Authors
     description: Concerns authors
-  - name: Topics
-    description: Concerns topics
 
 paths:
   /books:
