@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.5.1
+  version: 1.5.2
   description: STD22079
 
 servers:
@@ -91,6 +91,41 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
 
+    delete:
+      tags:
+        - Books
+      summary: Delete multiple books
+      description: Delete multiple books by providing a list of IDs.
+      operationId: deleteMultipleBooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CrupdateBook/properties/id'
+      responses:
+        204:
+          description: Deletion successful
+
+  /books/{bookId}:
+    delete:
+      tags:
+        - Books
+      summary: Delete a Book
+      description: Delete a book by its ID.
+      operationId: deleteBook
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Delete successful
+
   /books/{bookId}/authors/{authorId}:
     put:
       tags:
@@ -142,23 +177,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-
-  /books/{bookId}:
-    delete:
-      tags:
-        - Books
-      summary: Delete a Book
-      description: Delete a book by its ID.
-      operationId: deleteBook
-      parameters:
-        - name: bookId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        204:
-          description: Delete successful
 
 ###Authors===
   /authors:
