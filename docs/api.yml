@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.5.3
+  version: 1.5.4
   description: STD22079
 
 servers:
@@ -166,6 +166,31 @@ paths:
                   $ref: '#/components/schemas/Book'
 
 ###Authors===
+  /authors/page/{page}/pageSize/{pageSize}:
+    get:
+      tags:
+        - Authors
+      summary: Get all authors limited by page
+      description: Retrieve a list of authors paginated.
+      operationId: getAuthors
+      parameters:
+        - name: authorName
+          in: query
+          description: Filter authors by name.
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/pathPagination"
+      responses:
+        200:
+          description: List of returned authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+                  
   /authors:
     get:
       tags:
