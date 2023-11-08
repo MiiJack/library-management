@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.5.4
+  version: 1.7.0
   description: STD22079
 
 servers:
@@ -45,14 +45,14 @@ paths:
           required: false
         - $ref: "#/components/parameters/queryPagination"
       responses:
-        200:
-          description: List of filtered books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
     put:
       tags:
@@ -69,14 +69,14 @@ paths:
               items:
                 $ref: '#/components/schemas/CrupdateBook'
       responses:
-        200:
-          description: List of created or updated books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
     delete:
       tags:
@@ -93,8 +93,14 @@ paths:
               items:
                 $ref: '#/components/schemas/CrupdateBook/properties/id'
       responses:
-        204:
-          description: Deletion successful
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
   /books/{bookId}:
     delete:
@@ -110,8 +116,14 @@ paths:
           schema:
             type: string
       responses:
-        204:
-          description: Delete successful
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
   /books/{bookId}/authors/{authorId}:
     put:
@@ -132,14 +144,14 @@ paths:
           schema:
             type: string
       responses:
-        200:
-          description: Author successfully modified in the book
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
   /books/authors:
     put:
@@ -156,14 +168,14 @@ paths:
               items:
                 $ref: '#/components/schemas/UpdateBookAuthor'
       responses:
-        200:
-          description: Authors successfully modified in the list of books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
 ###Authors===
   /authors/page/{page}/pageSize/{pageSize}:
@@ -182,14 +194,14 @@ paths:
             type: string
         - $ref: "#/components/parameters/pathPagination"
       responses:
-        200:
-          description: List of returned authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
                   
   /authors:
     get:
@@ -207,14 +219,14 @@ paths:
             type: string
         - $ref: "#/components/parameters/queryPagination"
       responses:
-        200:
-          description: List of returned authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
     put:
       tags:
@@ -230,14 +242,15 @@ paths:
               items:
                 $ref: '#/components/schemas/Author'
       responses:
-        200:
-          description: List of created or updated authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
     delete:
       tags:
         - Authors
@@ -253,8 +266,14 @@ paths:
               items:
                 $ref: '#/components/schemas/Author/properties/id'
       responses:
-        204:
-          description: Deletion successful
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
   /authors/{authorId}:
     delete:
@@ -270,10 +289,63 @@ paths:
           schema:
             type: string
       responses:
-        204:
-          description: Delete successful
+       '200':
+         $ref: '#/components/responses/OK200'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
 
 components:
+  responses:
+    OK200:
+      description: The request has succeeded
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuccessResponse'
+
+    BadRequest400:
+      description: The server cannot process the request
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example: 
+            status: 
+              code: 400
+              message: "Bad request"
+            body: 
+              error: "Invalid input data"
+
+    Forbidden403:
+      description: The server refused the request
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example: 
+            status: 
+              code: 403
+              message: "Forbidden"
+            body: 
+              error: "Access denied"
+              
+    InternalServerError500:
+      description: The server encountered an unexpected error
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example: 
+            status: 
+              code: 500
+              message: "Internal server error"
+            body: 
+              error: "An unexpected error occurred on the server"
+
   parameters:
     queryPagination:
       name: pagination
@@ -310,6 +382,44 @@ components:
             default: 50
 
   schemas:
+    Response:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            code:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: "The request has succeeded"
+        body:
+          type: object
+
+    SuccessResponse:
+      allOf:
+        - $ref: '#/components/schemas/Response'
+        - type: object
+          properties:
+            body:
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/Book'
+                  - $ref: '#/components/schemas/Author'
+
+    ErrorResponse:
+      allOf:
+        - $ref: '#/components/schemas/Response'
+        - type: object
+          properties:
+            body:
+              type: object
+              properties:
+                error:
+                  type: string
+
     UpdateBookAuthor:
       type: object
       properties:
