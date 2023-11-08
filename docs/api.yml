@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.4.3
+  version: 1.5.0
   description: STD22079
 
 servers:
@@ -9,13 +9,14 @@ servers:
 
 tags:
   - name: Books
-    description: Concerns books
+    description: Book related endpoint
   - name: Authors
-    description: Concerns authors
+    description: Author related endpoint
   - name: Topics
-    description: Concerns topics
+    description: Topics related endpoint
 
 paths:
+###Books===
   /books:
     get:
       tags:
@@ -92,6 +93,24 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
 
+    delete:
+      tags:
+        - Books
+      summary: Delete multiple books
+      description: Delete multiple books by providing a list of IDs.
+      operationId: deleteMultipleBooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CrupdateBook/properties/id'
+      responses:
+        204:
+          description: Deletion successful
+
   /books/{bookId}:
     delete:
       tags:
@@ -165,7 +184,6 @@ paths:
     put:
       tags:
         - Books
-        - Topics
       summary: Modify topic of Books
       description: Modify the topic of a specific book.
       operationId: modifyTopicOfBook
@@ -194,7 +212,6 @@ paths:
     put:
       tags:
         - Books
-        - Topics
       summary: Modify Topics of Books
       description: Modify the topics of a list of books.
       operationId: modifyTopicOfBookList
@@ -214,6 +231,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+
+###Topics===
+  /authorTopics:
+    get:
+      tags:
+        - Topics
+        - Authors
+      summary: Get all topics of an author
+      description: Retrieve all topics of a specific author.
+      operationId: getAuthorTopics
+      parameters:
+        - name: authorId
+          in: query
+          description: Author ID to filter topics.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of filtered topics of a given author
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  author:
+                    $ref: '#/components/schemas/Author'
+                  topics:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Topic'
 
   /topics:
     get:
@@ -287,36 +335,7 @@ paths:
         204:
           description: Delete successful
 
-  /authorTopics:
-    get:
-      tags:
-        - Topics
-        - Authors
-      summary: Get all topics of an author
-      description: Retrieve all topics of a specific author.
-      operationId: getAuthorTopics
-      parameters:
-        - name: authorId
-          in: query
-          description: Author ID to filter topics.
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: List of filtered topics of a given author
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  author:
-                    $ref: '#/components/schemas/Author'
-                  topics:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Topic'
-
+###Authors===
   /authors:
     get:
       tags:
