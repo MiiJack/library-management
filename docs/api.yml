@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.5.0
+  version: 1.5.1
   description: STD22079
 
 servers:
@@ -9,11 +9,12 @@ servers:
 
 tags:
   - name: Books
-    description: Concerns books
+    description: Book related endpoint
   - name: Authors
-    description: Concerns authors
+    description: Author related endpoint
 
 paths:
+###Books===
   /books:
     get:
       tags:
@@ -90,23 +91,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
 
-  /books/{bookId}:
-    delete:
-      tags:
-        - Books
-      summary: Delete a Book
-      description: Delete a book by its ID.
-      operationId: deleteBook
-      parameters:
-        - name: bookId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        204:
-          description: Delete successful
-
   /books/{bookId}/authors/{authorId}:
     put:
       tags:
@@ -159,6 +143,24 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
 
+  /books/{bookId}:
+    delete:
+      tags:
+        - Books
+      summary: Delete a Book
+      description: Delete a book by its ID.
+      operationId: deleteBook
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Delete successful
+
+###Authors===
   /authors:
     get:
       tags:
