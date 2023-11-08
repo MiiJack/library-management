@@ -334,3 +334,12 @@ components:
                 - ROMANCE
                 - COMEDY
                 - OTHER
+
+# 2.b.i.L'objet UpdateBookAuthor ne contient que les identifiants CrupdateBook et Author car son objectif premier est de relier un livre à un auteur. 
+# Les identifiants suffisent à établir ce lien, et l'ajout de propriétés supplémentaires telles que bookName et authorName ne modifierait pas le lien entre le livre et l'auteur.              
+
+# 2.b.ii. L'objet 'UpdateBookAuthor' doit avoir des propriétés de 'CrupdateBook' et 'Author' lorsque vous voulez mettre à jour le nom du livre, les numéros de page ou le sujet en même temps que vous changez l'auteur. 
+# Cela peut être utile dans un scénario où les détails d'un livre sont mis à jour et où l'auteur est modifié dans le cadre de la même opération.
+
+# 3.a Performance : Lorsqu'il y a une grande quantité de données, le fait de les charger toutes en même temps peut être lent et consommer beaucoup de ressources. 
+# Facilité d'utilisation : La pagination permet aux utilisateurs de naviguer plus facilement dans de grands ensembles de données.
