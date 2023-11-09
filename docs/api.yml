@@ -179,7 +179,7 @@ paths:
          $ref: '#/components/responses/InternalServerError500'
 
 ###Authors===
-  /authors/{page}/{pageSize}:
+  /authors/page/{page}/pageSize/{pageSize}:
     get:
       tags:
         - Authors
