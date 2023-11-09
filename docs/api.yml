@@ -464,6 +464,20 @@ components:
         releaseDate:
           type: string
           format: date
+    
+    BookNoId:
+      allOf:
+        - $ref: "#components/schemas/Book"
+        - type: object
+          properties:
+            id:
+              type: string
+              readOnly: true
+            topic:  
+              type: string
+              readOnly: true
+            idAuthor:
+              $ref: "#/components/schemas/Author/properties/id"
 
     Author:
       type: object
@@ -474,6 +488,15 @@ components:
           type: string
         sex:
           $ref: "#/components/schemas/Sex"
+
+    AuthorNoId:
+      allOf:
+        - $ref: "#components/schemas/Author"
+        - type: object
+          properties:
+            id:
+              type: string
+              readOnly: true
 
     Sex:
       type: string
