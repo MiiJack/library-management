@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.7.1
+  version: 1.7.2
   description: STD22079
 
 servers:
@@ -47,7 +47,7 @@ paths:
         - $ref: "#/components/parameters/queryPageSize"
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Book'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -71,7 +71,7 @@ paths:
                 $ref: '#/components/schemas/CrupdateBook'
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Book'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -95,7 +95,7 @@ paths:
                 $ref: '#/components/schemas/CrupdateBook/properties/id'
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Book'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -118,7 +118,7 @@ paths:
             type: string
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Book'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -146,7 +146,7 @@ paths:
             type: string
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Book'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -170,7 +170,7 @@ paths:
                 $ref: '#/components/schemas/UpdateBookAuthor'
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Book'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -197,7 +197,7 @@ paths:
         - $ref: "#/components/parameters/pathPageSize"
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Author'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -224,7 +224,7 @@ paths:
 
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+        $ref: '#/components/responses/OK200Author'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -247,7 +247,7 @@ paths:
                 $ref: '#/components/schemas/Author'
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+        $ref: '#/components/responses/OK200Author'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -271,7 +271,7 @@ paths:
                 $ref: '#/components/schemas/Author/properties/id'
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Author'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -294,7 +294,7 @@ paths:
             type: string
       responses:
        '200':
-         $ref: '#/components/responses/OK200'
+         $ref: '#/components/responses/OK200Author'
        '400':
          $ref: '#/components/responses/BadRequest400'
        '403':
@@ -304,12 +304,19 @@ paths:
 
 components:
   responses:
-    OK200:
+    OK200Author:
       description: The request has succeeded
       content: 
         application/json:
           schema:
-            $ref: '#/components/schemas/SuccessResponse'
+            $ref: '#/components/schemas/SuccessResponseAuthor'
+
+    OK200Book:
+      description: The request has succeeded
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuccessResponseBook'
 
     BadRequest400:
       description: The server cannot process the request
@@ -403,7 +410,17 @@ components:
         body:
           type: object
 
-    SuccessResponse:
+    SuccessResponseAuthor:
+     allOf:
+       - $ref: '#/components/schemas/Response'
+       - type: object
+         properties:
+           body:
+             type: array
+             items:
+               $ref: '#/components/schemas/Author'
+
+    SuccessResponseBook:
       allOf:
         - $ref: '#/components/schemas/Response'
         - type: object
@@ -411,9 +428,7 @@ components:
             body:
               type: array
               items:
-                oneOf:
-                  - $ref: '#/components/schemas/Book'
-                  - $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/Book'
 
     ErrorResponse:
       allOf:
