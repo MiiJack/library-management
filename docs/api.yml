@@ -12,6 +12,8 @@ tags:
     description: Book related endpoint
   - name: Authors
     description: Author related endpoint
+  - name: Import
+    description: Import related endpoint
 
 paths:
 ###Books===
@@ -302,6 +304,57 @@ paths:
        '500':
          $ref: '#/components/responses/InternalServerError500'
 
+###Import===
+  /authors/import:
+    post:
+      tags:
+        - Import
+      summary: Import authors
+      description: Import a list of authors from a file.
+      operationId: importAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorImport'
+          application/ms-excel:
+            schema:
+              $ref: '#/components/schemas/AuthorImport'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK200Author'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
+
+  /books/import:
+    post:
+      tags:
+        - Import
+      summary: Import books
+      description: Import a list of books from a file.
+      operationId: importBooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookImport'
+          application/ms-excel:
+            schema:
+              $ref: '#/components/schemas/BookImport'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
+
 components:
   responses:
     OK200Author:
@@ -465,7 +518,7 @@ components:
           type: string
           format: date
     
-    BookNoId:
+    BookImport:
       allOf:
         - $ref: "#components/schemas/Book"
         - type: object
@@ -489,7 +542,7 @@ components:
         sex:
           $ref: "#/components/schemas/Sex"
 
-    AuthorNoId:
+    AuthorImport:
       allOf:
         - $ref: "#components/schemas/Author"
         - type: object
