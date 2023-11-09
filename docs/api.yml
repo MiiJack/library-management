@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.8.0
+  version: 1.8.1
   description: STD22079
 
 servers:
@@ -544,7 +544,7 @@ components:
 
     AuthorImport:
       allOf:
-        - $ref: "#components/schemas/Author"
+        - $ref: "#/components/schemas/Author"
         - type: object
           properties:
             id:
