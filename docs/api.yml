@@ -316,10 +316,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthorImport'
+              $ref: '#/components/schemas/ImportAuthor'
           application/ms-excel:
             schema:
-              $ref: '#/components/schemas/AuthorImport'
+              $ref: '#/components/schemas/ImportAuthor'
       responses:
         '200':
           $ref: '#/components/responses/OK200Author'
@@ -341,10 +341,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BookImport'
+              $ref: '#/components/schemas/ImportBook'
           application/ms-excel:
             schema:
-              $ref: '#/components/schemas/BookImport'
+              $ref: '#/components/schemas/ImportBook'
       responses:
         '200':
           $ref: '#/components/responses/OK200Book'
@@ -518,7 +518,7 @@ components:
           type: string
           format: date
     
-    BookImport:
+    ImportBook:
       allOf:
         - $ref: "#/components/schemas/Book"
         - type: object
@@ -542,7 +542,7 @@ components:
         sex:
           $ref: "#/components/schemas/Sex"
 
-    AuthorImport:
+    ImportAuthor:
       allOf:
         - $ref: "#/components/schemas/Author"
         - type: object
