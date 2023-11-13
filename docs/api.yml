@@ -36,6 +36,12 @@ paths:
           schema:
             type: string
         - in: query
+          name: available
+          description: Shows if a book is available
+          schema:
+            $ref: "#/components/schemas/BorrowStatus/properties/isborrowed"
+          allowEmptyValue: true
+        - in: query
           name: releaseDateMin
           description: Minimum release date. Ignored if `releaseDateMax` is not provided. Must not be after `releaseDateMax`.
           schema:
@@ -150,6 +156,26 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200Book'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
+  /books/returned:
+    get:
+      tags:
+        - Books
+      summary: Get all returned books
+      description: Retrieve a list of returned books, optionally filtered and paginated.
+      operationId: getReturnedBooks
+      parameters:
+        - $ref: "#/components/parameters/queryPage"
+        - $ref: "#/components/parameters/queryPageSize"
       responses:
        '200':
          $ref: '#/components/responses/OK200Book'
@@ -359,8 +385,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
-###Visitors & loan
-  /visitors:
+###Visitors
+  /Visitors:
     get:
       tags:
         - Visitor
@@ -694,6 +720,8 @@ components:
                 - ROMANCE
                 - COMEDY
                 - OTHER
+        borrowStatus:
+          $ref: "#/components/schemas/BorrowStatus"
 
     Visitor:
       type: object
@@ -705,16 +733,32 @@ components:
         reference:
           type: string
 
-    Loan: ###The action of borrowing
+    Loan:
       type: object
       properties:
         id:
           type: string
-        visitor:
+        Visitor:
           $ref: '#/components/schemas/Visitor'
         book:
-          $ref: '#/components/schemas/Book'
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
         loanDate:
+          type: string
+          format: date-time
+        returnDate:
+          type: string
+          format: date-time
+
+    BorrowStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        isborrowed:
+          type: boolean
+        lastBorrowDate:
           type: string
           format: date-time
         returnDate:
