@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Library API
   version: 1.10.0
-  description: | 
+  description: |
     STD22028 
     STD22079
 
@@ -20,7 +20,7 @@ tags:
     description: Visitor related endpoint
 
 paths:
-###Books===
+  ###Books===
   /books/{status}:
     get:
       tags:
@@ -29,7 +29,7 @@ paths:
       description: Retrieve a list of books based on their availability status.
       operationId: getBooksByStatus
       security:
-        - Admin: [borrow, return]
+        - Admin: [ borrow, return ]
       parameters:
         - name: status
           in: path
@@ -37,7 +37,7 @@ paths:
           required: true
           schema:
             type: string
-            enum: ['available', 'borrowed']
+            enum: [ 'available', 'borrowed' ]
         - $ref: "#/components/parameters/queryPage"
         - $ref: "#/components/parameters/queryPageSize"
       responses:
@@ -58,7 +58,7 @@ paths:
       description: Retrieve a list of books, optionally filtered and paginated.
       operationId: getBooks
       security:
-        - Anonymous: [read:books, read:authors]
+        - Anonymous: [ read:books, read:authors ]
       parameters:
         - in: query
           name: bookName
@@ -89,14 +89,14 @@ paths:
         - $ref: "#/components/parameters/queryPage"
         - $ref: "#/components/parameters/queryPageSize"
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Book'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
     put:
       tags:
@@ -113,14 +113,14 @@ paths:
               items:
                 $ref: '#/components/schemas/CrupdateBook'
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Book'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
     delete:
       tags:
@@ -137,14 +137,14 @@ paths:
               items:
                 $ref: '#/components/schemas/CrupdateBook/properties/id'
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Book'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
   /books/{bookId}:
     delete:
@@ -154,7 +154,7 @@ paths:
       description: Delete a book by its ID.
       operationId: deleteBook
       security:
-        - Anonymous: [read:books, read:authors]
+        - Anonymous: [ read:books, read:authors ]
       parameters:
         - name: bookId
           in: path
@@ -162,14 +162,14 @@ paths:
           schema:
             type: string
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Book'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
   /books/{bookId}/authors/{authorId}:
     put:
@@ -190,14 +190,14 @@ paths:
           schema:
             type: string
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Book'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
   /books/authors:
     put:
@@ -214,16 +214,16 @@ paths:
               items:
                 $ref: '#/components/schemas/UpdateBookAuthor'
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Book'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
-###Authors===
+  ###Authors===
   /authors/page/{page}/pageSize/{pageSize}:
     get:
       tags:
@@ -241,15 +241,15 @@ paths:
         - $ref: "#/components/parameters/pathPage"
         - $ref: "#/components/parameters/pathPageSize"
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Author'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
-                  
+        '200':
+          $ref: '#/components/responses/OK200Author'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
+
   /authors:
     get:
       tags:
@@ -258,7 +258,7 @@ paths:
       description: Retrieve a list of authors, optionally filtered and paginated.
       operationId: getAuthors
       security:
-        - Anonymous: [read:books, read:authors]
+        - Anonymous: [ read:books, read:authors ]
       parameters:
         - name: authorName
           in: query
@@ -270,14 +270,14 @@ paths:
         - $ref: "#/components/parameters/queryPageSize"
 
       responses:
-       '200':
-        $ref: '#/components/responses/OK200Author'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Author'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
     put:
       tags:
@@ -293,14 +293,14 @@ paths:
               items:
                 $ref: '#/components/schemas/Author'
       responses:
-       '200':
-        $ref: '#/components/responses/OK200Author'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Author'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
     delete:
       tags:
@@ -317,14 +317,14 @@ paths:
               items:
                 $ref: '#/components/schemas/Author/properties/id'
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Author'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Author'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
   /authors/{authorId}:
     delete:
@@ -334,7 +334,7 @@ paths:
       description: Delete an author by its ID.
       operationId: deleteAuthor
       security:
-        - Anonymous: [read:books, read:authors]
+        - Anonymous: [ read:books, read:authors ]
       parameters:
         - name: authorId
           in: path
@@ -342,16 +342,16 @@ paths:
           schema:
             type: string
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Author'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Author'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
-###Import===
+  ###Import===
   /authors/import:
     post:
       tags:
@@ -396,7 +396,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
-###Visitors
+  ###Visitors
   /Visitors:
     get:
       tags:
@@ -414,14 +414,14 @@ paths:
         - $ref: "#/components/parameters/queryPage"
         - $ref: "#/components/parameters/queryPageSize"
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Visitor'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Visitor'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
     put:
       tags:
@@ -438,14 +438,14 @@ paths:
               items:
                 $ref: '#/components/schemas/Visitor'
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Visitor'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Visitor'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
     delete:
       tags:
@@ -462,14 +462,14 @@ paths:
               items:
                 $ref: '#/components/schemas/Visitor/properties/id'
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Visitor'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Visitor'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
   /Visitor/{visitorId}:
     delete:
@@ -485,14 +485,14 @@ paths:
           schema:
             type: string
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Visitor'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Visitor'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
   /visitors/{visitorId}/books/{bookId}/{action}:
     post:
@@ -517,7 +517,7 @@ paths:
           required: true
           schema:
             type: string
-            enum: ['borrow', 'return']
+            enum: [ 'borrow', 'return' ]
       responses:
         '200':
           $ref: '#/components/responses/OK200Visitor'
@@ -556,14 +556,14 @@ paths:
             type: string
             format: date-time
       responses:
-       '200':
-         $ref: '#/components/responses/OK200VisitorActivity'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200VisitorActivity'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
   /visitors/{visitorId}/borrowedBooks:
     get:
@@ -579,82 +579,82 @@ paths:
           schema:
             type: string
       responses:
-       '200':
-         $ref: '#/components/responses/OK200Book'
-       '400':
-         $ref: '#/components/responses/BadRequest400'
-       '403':
-         $ref: '#/components/responses/Forbidden403'
-       '500':
-         $ref: '#/components/responses/InternalServerError500'
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
 
 components:
   responses:
     OK200Author:
       description: The request has succeeded
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/SuccessResponseAuthor'
 
     OK200Book:
       description: The request has succeeded
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/SuccessResponseBook'
 
     OK200Visitor:
       description: The request has succeeded
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/SuccessResponseVisitor'
 
     OK200VisitorActivity:
       description: The request has succeeded
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/SuccessResponseVisitor'
 
     BadRequest400:
       description: The server cannot process the request
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-          example: 
-            status: 
+          example:
+            status:
               code: 400
               message: "Bad request"
-            body: 
+            body:
               error: "Invalid input data"
 
     Forbidden403:
       description: The server refused the request
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-          example: 
-            status: 
+          example:
+            status:
               code: 403
               message: "Forbidden"
-            body: 
+            body:
               error: "Access denied"
-              
+
     InternalServerError500:
       description: The server encountered an unexpected error
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-          example: 
-            status: 
+          example:
+            status:
               code: 500
               message: "Internal server error"
-            body: 
+            body:
               error: "An unexpected error occurred on the server"
 
   parameters:
@@ -711,14 +711,14 @@ components:
           type: object
 
     SuccessResponseAuthor:
-     allOf:
-       - $ref: '#/components/schemas/Response'
-       - type: object
-         properties:
-           body:
-             type: array
-             items:
-               $ref: '#/components/schemas/Author'
+      allOf:
+        - $ref: '#/components/schemas/Response'
+        - type: object
+          properties:
+            body:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author'
 
     SuccessResponseBook:
       allOf:
@@ -784,12 +784,12 @@ components:
             id:
               type: string
               readOnly: true
-            topic:  
+            topic:
               type: string
               readOnly: true
             idAuthor:
               $ref: "#/components/schemas/Author/properties/id"
-      
+
     AuthorNoID:
       type: object
       allOf:
@@ -863,8 +863,8 @@ components:
     Sex:
       type: string
       enum:
-          - M
-          - F
+        - M
+        - F
 
     Book:
       type: object
