@@ -1,8 +1,10 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.8.2
-  description: STD22079
+  version: 1.9.0
+  description: | 
+    STD22028 
+    STD22079
 
 servers:
   - url: https://library.com
@@ -14,6 +16,8 @@ tags:
     description: Author related endpoint
   - name: Import
     description: Import related endpoint
+  - name: Visitor
+    description: Visitor related endpoint
 
 paths:
 ###Books===
@@ -355,6 +359,104 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
+###Visitors & loan
+  /visitors:
+    get:
+      tags:
+        - Visitor
+      summary: Get all visitors
+      description: Retrieve a list of visitors, optionally filtered and paginated.
+      operationId: getVisitor
+      parameters:
+        - in: query
+          name: visitorId
+          description: Filter visitor by ID
+          required: false
+          schema:
+            type: string
+        - $ref: "#/components/parameters/queryPage"
+        - $ref: "#/components/parameters/queryPageSize"
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200Visitor'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
+    put:
+      tags:
+        - Visitor
+      summary: Create or update a list of visitor
+      description: Create or update a list of visitors.
+      operationId: crupdateVisitor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Visitor'
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200Visitor'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
+    delete:
+      tags:
+        - Visitor
+      summary: Delete multiple visitors
+      description: Delete multiple visitors by providing a list of IDs.
+      operationId: deleteMultipleVisitors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Visitor/properties/id'
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200Visitor'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
+  /Visitor/{visitorId}:
+    delete:
+      tags:
+        - Visitor
+      summary: Delete a Visitor
+      description: Delete a Visitor by its ID.
+      operationId: deleteVisitor
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200Visitor'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
 components:
   responses:
     OK200Author:
@@ -370,6 +472,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SuccessResponseBook'
+
+    OK200Visitor:
+      description: The request has succeeded
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuccessResponseVisitor'
 
     BadRequest400:
       description: The server cannot process the request
@@ -483,6 +592,16 @@ components:
               items:
                 $ref: '#/components/schemas/Book'
 
+    SuccessResponseVisitor:
+      allOf:
+        - $ref: '#/components/schemas/Response'
+        - type: object
+          properties:
+            body:
+              type: array
+              items:
+                $ref: '#/components/schemas/Visitor'
+
     ErrorResponse:
       allOf:
         - $ref: '#/components/schemas/Response'
@@ -575,6 +694,32 @@ components:
                 - ROMANCE
                 - COMEDY
                 - OTHER
+
+    Visitor:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        reference:
+          type: string
+
+    Loan: ###The action of borrowing
+      type: object
+      properties:
+        id:
+          type: string
+        visitor:
+          $ref: '#/components/schemas/Visitor'
+        book:
+          $ref: '#/components/schemas/Book'
+        loanDate:
+          type: string
+          format: date-time
+        returnDate:
+          type: string
+          format: date-time
 
 # 2.b.i.L'objet UpdateBookAuthor ne contient que les identifiants CrupdateBook et Author car son objectif premier est de relier un livre à un auteur. 
 # Les identifiants suffisent à établir ce lien, et l'ajout de propriétés supplémentaires telles que bookName et authorName ne modifierait pas le lien entre le livre et l'auteur.              
