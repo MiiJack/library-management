@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.8.2
+  version: 1.9.0
   description: STD22079
 
 servers:
@@ -317,9 +317,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ImportAuthor'
-          application/ms-excel:
-            schema:
-              $ref: '#/components/schemas/ImportAuthor'
       responses:
         '200':
           $ref: '#/components/responses/OK200Author'
@@ -340,9 +337,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/ImportBook'
-          application/ms-excel:
             schema:
               $ref: '#/components/schemas/ImportBook'
       responses:
@@ -518,7 +512,8 @@ components:
           type: string
           format: date
     
-    ImportBook:
+    BookNoID:
+      type: object
       allOf:
         - $ref: "#/components/schemas/Book"
         - type: object
@@ -531,6 +526,66 @@ components:
               readOnly: true
             idAuthor:
               $ref: "#/components/schemas/Author/properties/id"
+      
+    AuthorNoID:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Author"
+        - type: object
+          properties:
+            id:
+              type: string
+              readOnly: true
+
+    ImportBook:
+      oneOf:
+        - type: array
+          items:
+            $ref: "#/components/schemas/BookNoID"
+        - type: string
+          format: binary
+          description: Should be the result from an excel file
+      discriminator:
+        propertyName: importType
+        mapping:
+          excel: '#/components/schemas/ImportExcel'
+          json: '#/components/schemas/ImportJSON'
+
+    ImportExcel:
+      type: string
+      format: binary
+      description: Imported excel file
+
+    ImportJSON:
+      type: array
+      items:
+        oneOf:
+          - allOf:
+              - $ref: "#/components/schemas/BookNoID"
+              - type: object
+          - allOf:
+              - $ref: "#/components/schemas/AuthorNoID"
+              - type: object
+
+    ImportAuthor:
+      oneOf:
+        - type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Author"
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    readOnly: true
+        - type: string
+          format: binary
+          description: Should be the result from an excel file
+      discriminator:
+        propertyName: importType
+        mapping:
+          excel: '#/components/schemas/ImportExcel'
+          json: '#/components/schemas/ImportJSON'
 
     Author:
       type: object
@@ -541,15 +596,6 @@ components:
           type: string
         sex:
           $ref: "#/components/schemas/Sex"
-
-    ImportAuthor:
-      allOf:
-        - $ref: "#/components/schemas/Author"
-        - type: object
-          properties:
-            id:
-              type: string
-              readOnly: true
 
     Sex:
       type: string
