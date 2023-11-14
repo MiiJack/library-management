@@ -28,6 +28,8 @@ paths:
       summary: Get books by availability status
       description: Retrieve a list of books based on their availability status.
       operationId: getBooksByStatus
+      security:
+        - Admin: [borrow, return]
       parameters:
         - name: status
           in: path
@@ -893,6 +895,14 @@ components:
           scopes:
             read:books: Read access to books
             read:authors: Read access to authors
+    Admin:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'your_authorization_url'
+          scopes:
+            borrow: Borrow access
+            return: Return access
 # 2.b.i.L'objet UpdateBookAuthor ne contient que les identifiants CrupdateBook et Author car son objectif premier est de relier un livre à un auteur. 
 # Les identifiants suffisent à établir ce lien, et l'ajout de propriétés supplémentaires telles que bookName et authorName ne modifierait pas le lien entre le livre et l'auteur.              
 
