@@ -21,6 +21,33 @@ tags:
 
 paths:
 ###Books===
+  /books/{status}:
+    get:
+      tags:
+        - Books
+      summary: Get books by availability status
+      description: Retrieve a list of books based on their availability status.
+      operationId: getBooksByStatus
+      parameters:
+        - name: status
+          in: path
+          description: The availability status of the books (available or borrowed).
+          required: true
+          schema:
+            type: string
+            enum: ['available', 'borrowed']
+        - $ref: "#/components/parameters/queryPage"
+        - $ref: "#/components/parameters/queryPageSize"
+      responses:
+        '200':
+          $ref: '#/components/responses/OK200Book'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
+
   /books:
     get:
       tags:
@@ -189,33 +216,6 @@ paths:
          $ref: '#/components/responses/Forbidden403'
        '500':
          $ref: '#/components/responses/InternalServerError500'
-
-  /books/{status}:
-    get:
-      tags:
-        - Books
-      summary: Get books by availability status
-      description: Retrieve a list of books based on their availability status.
-      operationId: getBooksByStatus
-      parameters:
-        - name: status
-          in: path
-          description: The availability status of the books (available or borrowed).
-          required: true
-          schema:
-            type: string
-            enum: ['available', 'borrowed']
-        - $ref: "#/components/parameters/queryPage"
-        - $ref: "#/components/parameters/queryPageSize"
-      responses:
-        '200':
-          $ref: '#/components/responses/OK200Book'
-        '400':
-          $ref: '#/components/responses/BadRequest400'
-        '403':
-          $ref: '#/components/responses/Forbidden403'
-        '500':
-          $ref: '#/components/responses/InternalServerError500'
 
 ###Authors===
   /authors/page/{page}/pageSize/{pageSize}:
@@ -490,6 +490,40 @@ paths:
        '500':
          $ref: '#/components/responses/InternalServerError500'
 
+  /visitors/{visitorId}/books/{bookId}/{action}:
+    post:
+      tags:
+        - Visitor
+      summary: Borrow or return a book
+      description: Borrow or return a book for a visitor.
+      operationId: borrowOrReturnBook
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: ['borrow', 'return']
+      responses:
+        '200':
+          $ref: '#/components/responses/OK200Visitor'
+        '400':
+          $ref: '#/components/responses/BadRequest400'
+        '403':
+          $ref: '#/components/responses/Forbidden403'
+        '500':
+          $ref: '#/components/responses/InternalServerError500'
+
   /visitors/{visitorId}/activity:
     get:
       tags:
@@ -549,40 +583,6 @@ paths:
          $ref: '#/components/responses/Forbidden403'
        '500':
          $ref: '#/components/responses/InternalServerError500'
-
-  /visitors/{visitorId}/books/{bookId}/{action}:
-    post:
-      tags:
-        - Visitor
-      summary: Borrow or return a book
-      description: Borrow or return a book for a visitor.
-      operationId: borrowOrReturnBook
-      parameters:
-        - name: visitorId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: bookId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: action
-          in: path
-          required: true
-          schema:
-            type: string
-            enum: ['borrow', 'return']
-      responses:
-        '200':
-          $ref: '#/components/responses/OK200Visitor'
-        '400':
-          $ref: '#/components/responses/BadRequest400'
-        '403':
-          $ref: '#/components/responses/Forbidden403'
-        '500':
-          $ref: '#/components/responses/InternalServerError500'
 
 components:
   responses:
