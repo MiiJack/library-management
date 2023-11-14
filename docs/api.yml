@@ -190,13 +190,13 @@ paths:
        '500':
          $ref: '#/components/responses/InternalServerError500'
 
-  /books/returned:
+  /books/available:
     get:
       tags:
         - Books
-      summary: Get all returned books
-      description: Retrieve a list of returned books, optionally filtered and paginated.
-      operationId: getReturnedBooks
+      summary: Get all available books
+      description: Retrieve a list of available books, optionally filtered and paginated.
+      operationId: getAvailableBooks
       parameters:
         - $ref: "#/components/parameters/queryPage"
         - $ref: "#/components/parameters/queryPageSize"
@@ -209,6 +209,7 @@ paths:
          $ref: '#/components/responses/Forbidden403'
        '500':
          $ref: '#/components/responses/InternalServerError500'
+
 
   /books/borrowed:
     get:
@@ -503,6 +504,66 @@ paths:
        '500':
          $ref: '#/components/responses/InternalServerError500'
 
+  /visitors/{visitorId}/activity:
+    get:
+      tags:
+        - Visitor
+      summary: Get a visitor's activity
+      description: Retrieve a visitor's borrow and return activities within a specified date range.
+      operationId: getVisitorActivity
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: Start date of the activity range
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: End date of the activity range
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200VisitorActivity'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
+  /visitors/{visitorId}/borrowedBooks:
+    get:
+      tags:
+        - Visitor
+      summary: Get a visitor's borrowed books
+      description: Retrieve a list of books borrowed by a visitor.
+      operationId: getVisitorBorrowedBooks
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200Book'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
 components:
   responses:
     OK200Author:
@@ -520,6 +581,13 @@ components:
             $ref: '#/components/schemas/SuccessResponseBook'
 
     OK200Visitor:
+      description: The request has succeeded
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SuccessResponseVisitor'
+
+    OK200VisitorActivity:
       description: The request has succeeded
       content: 
         application/json:
