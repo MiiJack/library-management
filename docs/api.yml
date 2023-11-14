@@ -28,6 +28,8 @@ paths:
       summary: Get all books
       description: Retrieve a list of books, optionally filtered and paginated.
       operationId: getBooks
+      security:
+        - Anonymous: [read:books, read:authors]
       parameters:
         - in: query
           name: bookName
@@ -122,6 +124,8 @@ paths:
       summary: Delete a Book
       description: Delete a book by its ID.
       operationId: deleteBook
+      security:
+        - Anonymous: [read:books, read:authors]
       parameters:
         - name: bookId
           in: path
@@ -251,6 +255,8 @@ paths:
       summary: Get all authors
       description: Retrieve a list of authors, optionally filtered and paginated.
       operationId: getAuthors
+      security:
+        - Anonymous: [read:books, read:authors]
       parameters:
         - name: authorName
           in: query
@@ -325,6 +331,8 @@ paths:
       summary: Delete an Author
       description: Delete an author by its ID.
       operationId: deleteAuthor
+      security:
+        - Anonymous: [read:books, read:authors]
       parameters:
         - name: authorId
           in: path
@@ -842,6 +850,15 @@ components:
           type: string
           format: date-time
 
+  securitySchemes:
+    Anonymous:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'your_authorization_url'
+          scopes:
+            read:books: Read access to books
+            read:authors: Read access to authors
 # 2.b.i.L'objet UpdateBookAuthor ne contient que les identifiants CrupdateBook et Author car son objectif premier est de relier un livre à un auteur. 
 # Les identifiants suffisent à établir ce lien, et l'ajout de propriétés supplémentaires telles que bookName et authorName ne modifierait pas le lien entre le livre et l'auteur.              
 
