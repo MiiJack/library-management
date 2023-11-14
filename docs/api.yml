@@ -39,7 +39,7 @@ paths:
           name: available
           description: Shows if a book is available
           schema:
-            $ref: "#/components/schemas/BorrowStatus/properties/isborrowed"
+            $ref: "#/components/schemas/BorrowStatus/properties/isAvailable"
           allowEmptyValue: true
         - in: query
           name: releaseDateMin
@@ -166,6 +166,30 @@ paths:
        '500':
          $ref: '#/components/responses/InternalServerError500'
 
+  /books/authors:
+    put:
+      tags:
+        - Books
+      summary: Modify Authors of Books
+      description: Modify the authors of a list of books.
+      operationId: modifyAuthorOfBookList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBookAuthor'
+      responses:
+       '200':
+         $ref: '#/components/responses/OK200Book'
+       '400':
+         $ref: '#/components/responses/BadRequest400'
+       '403':
+         $ref: '#/components/responses/Forbidden403'
+       '500':
+         $ref: '#/components/responses/InternalServerError500'
+
   /books/returned:
     get:
       tags:
@@ -186,20 +210,16 @@ paths:
        '500':
          $ref: '#/components/responses/InternalServerError500'
 
-  /books/authors:
-    put:
+  /books/borrowed:
+    get:
       tags:
         - Books
-      summary: Modify Authors of Books
-      description: Modify the authors of a list of books.
-      operationId: modifyAuthorOfBookList
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/UpdateBookAuthor'
+      summary: Get all borrowed books
+      description: Retrieve a list of borrowed books, optionally filtered and paginated.
+      operationId: getBorrowedBooks
+      parameters:
+        - $ref: "#/components/parameters/queryPage"
+        - $ref: "#/components/parameters/queryPageSize"
       responses:
        '200':
          $ref: '#/components/responses/OK200Book'
@@ -732,19 +752,22 @@ components:
           type: string
         reference:
           type: string
+    
+    VisitorInfo:
+      allOf:
+        - $ref: "#/components/schemas/Visitor"
+        - $ref: "#/components/schemas/Checkout"
 
-    Loan:
+    Checkout:
       type: object
       properties:
         id:
           type: string
-        Visitor:
-          $ref: '#/components/schemas/Visitor'
-        book:
+        bookId:
           type: array
           items:
-            $ref: '#/components/schemas/Book'
-        loanDate:
+            $ref: '#/components/schemas/CrupdateBook/properties/id'
+        checkoutDate:
           type: string
           format: date-time
         returnDate:
@@ -756,12 +779,12 @@ components:
       properties:
         id:
           type: string
-        isborrowed:
+        isAvailable:
           type: boolean
+          default: true
+        borrowedBy:
+          $ref: "#/components/schemas/Visitor"
         lastBorrowDate:
-          type: string
-          format: date-time
-        returnDate:
           type: string
           format: date-time
 
