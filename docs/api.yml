@@ -509,14 +509,14 @@ paths:
           required: true
           schema:
             type: string
-            format: date
+            format: date-time
         - name: endDate
           in: query
           description: End date of the activity range
           required: true
           schema:
             type: string
-            format: date
+            format: date-time
       responses:
        '200':
          $ref: '#/components/responses/OK200VisitorActivity'
