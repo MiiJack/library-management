@@ -3,11 +3,8 @@ package std22079.librarymanagement.Model;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -17,7 +14,7 @@ public class Book {
     private int pageNumbers;
     private LocalDate releaseDate;
     private Author author;
-    private List<Topic> topic;
+    private String topic;
     private BorrowStatus borrowStatus;
 
     @Getter

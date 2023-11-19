@@ -2,9 +2,7 @@ package std22079.librarymanagement.Model;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode

@@ -2,13 +2,10 @@ package std22079.librarymanagement.Model;
 
 import lombok.*;
 
-@Getter
-@Setter
-@Builder
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class Author extends User {
     private String sex;
 }
