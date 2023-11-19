@@ -13,7 +13,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class Book {
     private int id;
-    private String bookName;
+    private String name;
     private int pageNumbers;
     private LocalDate releaseDate;
     private Author author;
