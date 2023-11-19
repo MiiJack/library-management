@@ -1,5 +1,6 @@
 package std22079.librarymanagement.Repositories;
 
+import std22079.librarymanagement.Configuration.DatabaseConfiguration;
 import std22079.librarymanagement.Model.Book;
 import std22079.librarymanagement.Model.Author;
 
@@ -8,18 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookCrudOperations implements CrudOperations<Book>{
-    private final Connection connection;
-
-    public BookCrudOperations(Connection connection) {
-        this.connection = connection;
-    }
     @Override
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM Book";
 
-        try (Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection connection = DatabaseConfiguration.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Book book = new Book();
@@ -46,13 +43,27 @@ public class BookCrudOperations implements CrudOperations<Book>{
 
     @Override
     public Book save(Book toSave) {
-        return null;
+        String sql = "INSERT INTO Book (bookName, pageNumbers, releaseDate, idAuthor, topic) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = DatabaseConfiguration.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, toSave.getName());
+            pstmt.setInt(2, toSave.getPageNumbers());
+            pstmt.setDate(3, java.sql.Date.valueOf(toSave.getReleaseDate()));
+            pstmt.setInt(4, toSave.getAuthor().getId());
+            pstmt.setString(5, toSave.getTopic());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toSave;
     }
 
     @Override
     public Book delete(Book toDelete) {
         String sql = "DELETE FROM Book WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConfiguration.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setInt(1, toDelete.getId());
             pstmt.executeUpdate();
@@ -64,7 +75,8 @@ public class BookCrudOperations implements CrudOperations<Book>{
 
     private Author getAuthorById(int id) {
         String sql = "SELECT * FROM Author WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DatabaseConfiguration.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
