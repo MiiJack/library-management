@@ -16,8 +16,8 @@ tags:
     description: Author related endpoint
   - name: Import
     description: Import related endpoint
-  - name: Visitor
-    description: Visitor related endpoint
+  - name: Subscriber
+    description: Subscriber related endpoint
 
 paths:
   ###Books===
@@ -396,18 +396,18 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
-  ###Visitors
-  /Visitors:
+  ###Subscriber
+  /Subscriber:
     get:
       tags:
-        - Visitor
-      summary: Get all visitors
-      description: Retrieve a list of visitors, optionally filtered and paginated.
-      operationId: getVisitor
+        - Subscriber
+      summary: Get all subscriber
+      description: Retrieve a list of subscriber, optionally filtered and paginated.
+      operationId: getSubscriber
       parameters:
         - in: query
-          name: visitorId
-          description: Filter visitor by ID
+          name: subscriberId
+          description: Filter subscriber by ID
           required: false
           schema:
             type: string
@@ -415,7 +415,7 @@ paths:
         - $ref: "#/components/parameters/queryPageSize"
       responses:
         '200':
-          $ref: '#/components/responses/OK200Visitor'
+          $ref: '#/components/responses/OK200Subscriber'
         '400':
           $ref: '#/components/responses/BadRequest400'
         '403':
@@ -425,10 +425,10 @@ paths:
 
     put:
       tags:
-        - Visitor
-      summary: Create or update a list of visitor
-      description: Create or update a list of visitors.
-      operationId: crupdateVisitor
+        - Subscriber
+      summary: Create or update a list of subscriber
+      description: Create or update a list of subscriber.
+      operationId: crupdateSubscriber
       requestBody:
         required: true
         content:
@@ -436,10 +436,10 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Visitor'
+                $ref: '#/components/schemas/Subscriber'
       responses:
         '200':
-          $ref: '#/components/responses/OK200Visitor'
+          $ref: '#/components/responses/OK200Subscriber'
         '400':
           $ref: '#/components/responses/BadRequest400'
         '403':
@@ -449,10 +449,10 @@ paths:
 
     delete:
       tags:
-        - Visitor
-      summary: Delete multiple visitors
-      description: Delete multiple visitors by providing a list of IDs.
-      operationId: deleteMultipleVisitors
+        - Subscriber
+      summary: Delete multiple subscriber
+      description: Delete multiple subscriber by providing a list of IDs.
+      operationId: deleteMultipleSubscriber
       requestBody:
         required: true
         content:
@@ -460,10 +460,10 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Visitor/properties/id'
+                $ref: '#/components/schemas/Subscriber/properties/id'
       responses:
         '200':
-          $ref: '#/components/responses/OK200Visitor'
+          $ref: '#/components/responses/OK200Subscriber'
         '400':
           $ref: '#/components/responses/BadRequest400'
         '403':
@@ -471,22 +471,22 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
-  /Visitor/{visitorId}:
+  /Subscriber/{SubscriberId}:
     delete:
       tags:
-        - Visitor
-      summary: Delete a Visitor
-      description: Delete a Visitor by its ID.
-      operationId: deleteVisitor
+        - Subscriber
+      summary: Delete a Subscriber
+      description: Delete a Subscriber by its ID.
+      operationId: deleteSubscriber
       parameters:
-        - name: visitorId
+        - name: subscriberId
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          $ref: '#/components/responses/OK200Visitor'
+          $ref: '#/components/responses/OK200Subscriber'
         '400':
           $ref: '#/components/responses/BadRequest400'
         '403':
@@ -494,15 +494,15 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
-  /visitors/{visitorId}/books/{bookId}/{action}:
+  /subscriber/{subscriberId}/books/{bookId}/{action}:
     post:
       tags:
-        - Visitor
+        - Subscriber
       summary: Borrow or return a book
-      description: Borrow or return a book for a visitor.
+      description: Borrow or return a book for a subscriber.
       operationId: borrowOrReturnBook
       parameters:
-        - name: visitorId
+        - name: subscriberId
           in: path
           required: true
           schema:
@@ -520,7 +520,7 @@ paths:
             enum: [ 'borrow', 'return' ]
       responses:
         '200':
-          $ref: '#/components/responses/OK200Visitor'
+          $ref: '#/components/responses/OK200Subscriber'
         '400':
           $ref: '#/components/responses/BadRequest400'
         '403':
@@ -528,15 +528,15 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
-  /visitors/{visitorId}/activity:
+  /subscriber/{subscriberId}/activity:
     get:
       tags:
-        - Visitor
-      summary: Get a visitor's activity
-      description: Retrieve a visitor's borrow and return activities within a specified date range.
-      operationId: getVisitorActivity
+        - Subscriber
+      summary: Get a subscriber's activity
+      description: Retrieve a subscriber's borrow and return activities within a specified date range.
+      operationId: getSubscriberActivity
       parameters:
-        - name: visitorId
+        - name: subscriberId
           in: path
           required: true
           schema:
@@ -557,7 +557,7 @@ paths:
             format: date-time
       responses:
         '200':
-          $ref: '#/components/responses/OK200VisitorActivity'
+          $ref: '#/components/responses/OK200SubscriberActivity'
         '400':
           $ref: '#/components/responses/BadRequest400'
         '403':
@@ -565,15 +565,15 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError500'
 
-  /visitors/{visitorId}/borrowedBooks:
+  /subscriber/{subscriberId}/borrowedBooks:
     get:
       tags:
-        - Visitor
-      summary: Get a visitor's borrowed books
-      description: Retrieve a list of books borrowed by a visitor.
-      operationId: getVisitorBorrowedBooks
+        - Subscriber
+      summary: Get a subscribers' borrowed books
+      description: Retrieve a list of books borrowed by a subscriber.
+      operationId: getSubscriberBorrowedBooks
       parameters:
-        - name: visitorId
+        - name: subscriberId
           in: path
           required: true
           schema:
@@ -604,19 +604,19 @@ components:
           schema:
             $ref: '#/components/schemas/SuccessResponseBook'
 
-    OK200Visitor:
+    OK200Subscriber:
       description: The request has succeeded
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SuccessResponseVisitor'
+            $ref: '#/components/schemas/SuccessResponseSubscriber'
 
-    OK200VisitorActivity:
+    OK200SubscriberActivity:
       description: The request has succeeded
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SuccessResponseVisitor'
+            $ref: '#/components/schemas/SuccessResponseSubscriber'
 
     BadRequest400:
       description: The server cannot process the request
@@ -730,7 +730,7 @@ components:
               items:
                 $ref: '#/components/schemas/Book'
 
-    SuccessResponseVisitor:
+    SuccessResponseSubscriber:
       allOf:
         - $ref: '#/components/schemas/Response'
         - type: object
@@ -738,7 +738,7 @@ components:
             body:
               type: array
               items:
-                $ref: '#/components/schemas/Visitor'
+                $ref: '#/components/schemas/Subscriber'
 
     ErrorResponse:
       allOf:
@@ -887,7 +887,7 @@ components:
         borrowStatus:
           $ref: "#/components/schemas/BorrowStatus"
 
-    Visitor:
+    Subscriber:
       type: object
       properties:
         id:
@@ -897,9 +897,9 @@ components:
         reference:
           type: string
     
-    VisitorInfo:
+    SubscriberInfo:
       allOf:
-        - $ref: "#/components/schemas/Visitor"
+        - $ref: "#/components/schemas/Subscriber"
         - $ref: "#/components/schemas/Checkout"
 
     Checkout:
@@ -927,7 +927,7 @@ components:
           type: boolean
           default: true
         borrowedBy:
-          $ref: "#/components/schemas/Visitor"
+          $ref: "#/components/schemas/Subscriber"
         lastBorrowDate:
           type: string
           format: date-time

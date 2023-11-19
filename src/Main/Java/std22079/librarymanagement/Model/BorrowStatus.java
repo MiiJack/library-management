@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 public class BorrowStatus {
     private String id;
     private boolean isAvailable;
-    private Visitor borrowedBy;
+    private Subscriber borrowedBy;
     private LocalDateTime lastBorrowDate;
 }
