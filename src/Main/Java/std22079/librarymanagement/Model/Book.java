@@ -14,16 +14,7 @@ public class Book {
     private int pageNumbers;
     private LocalDate releaseDate;
     private Author author;
-    private String topic;
+    private Topic topic;
     private BorrowStatus borrowStatus;
 
-    @Getter
-    @Setter
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Topic {
-        private String id;
-        private String topic;
-    }
 }
