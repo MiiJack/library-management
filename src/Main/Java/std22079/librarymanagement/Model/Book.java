@@ -15,6 +15,11 @@ public class Book {
     private LocalDate releaseDate;
     private Author author;
     private Topic topic;
-    private BorrowStatus borrowStatus;
+
+    public enum Topic{COMEDY,ROMANCE,OTHER}
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
 
 }

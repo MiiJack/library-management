@@ -3,7 +3,7 @@ package std22079.librarymanagement.Repositories;
 import std22079.librarymanagement.Configuration.DatabaseConfiguration;
 import std22079.librarymanagement.Model.Book;
 import std22079.librarymanagement.Model.Author;
-import std22079.librarymanagement.Model.Topic;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,10 +26,9 @@ public class BookCrudOperations implements CrudOperations<Book>{
                 book.setPageNumbers(rs.getInt("pageNumbers"));
                 book.setReleaseDate(rs.getDate("releaseDate").toLocalDate());
                 book.setAuthor(getAuthorById(rs.getInt("idAuthor")));
-                String topicName = rs.getString("topic");
-                Topic topic = new Topic();
-                topic.setTopic(topicName);
-                book.setTopic(topic);
+                String topicStr = rs.getString("topic");
+                book.setTopic(topicStr != null ? Book.Topic.valueOf(topicStr) : Book.Topic.OTHER);
+
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -46,7 +45,7 @@ public class BookCrudOperations implements CrudOperations<Book>{
 
     @Override
     public Book save(Book toSave) {
-        String sql = "INSERT INTO Book (name, pageNumbers, releaseDate, idAuthor, topic) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Book (name, pageNumbers, releaseDate, idAuthor, topic ) VALUES (?, ?, ?, ?, ?::topic)";
         try (Connection connection = DatabaseConfiguration.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
@@ -54,11 +53,9 @@ public class BookCrudOperations implements CrudOperations<Book>{
             pstmt.setInt(2, toSave.getPageNumbers());
             pstmt.setDate(3, java.sql.Date.valueOf(toSave.getReleaseDate()));
             pstmt.setInt(4, toSave.getAuthor().getId());
-            if (toSave.getTopic() != null) {
-                pstmt.setString(5, toSave.getTopic().getTopic());
-            } else {
-                pstmt.setNull(5, Types.OTHER); // Set to NULL if the Topic object is null
-            }
+            String topicStr = toSave.getTopic().name();
+            pstmt.setString(5, topicStr);
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

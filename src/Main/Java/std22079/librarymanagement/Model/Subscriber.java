@@ -11,8 +11,8 @@ import lombok.experimental.SuperBuilder;
 public class Subscriber extends User {
     private String reference;
 
-    public Subscriber(int id, String name, String reference) {
-        super(id, name);
-        this.reference = reference;
+    @Override
+    public String toString() {
+        return super.toString() + ", ref: " + reference;
     }
 }
